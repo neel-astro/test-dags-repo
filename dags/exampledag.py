@@ -12,7 +12,7 @@ Airflow tasks, and automatically infer dependencies and pass data.
 The second task uses dynamic task mapping to create a copy of the task for
 each Astronaut in the list retrieved from the API. This list will change
 depending on how many Astronauts are in space, and the DAG will adjust
-accordingly each time it runs.1
+accordingly each time it runs.
 
 For more explanation and getting started instructions, see our Write your
 first DAG tutorial: https://www.astronomer.io/docs/learn/get-started-with-airflow
@@ -20,7 +20,7 @@ first DAG tutorial: https://www.astronomer.io/docs/learn/get-started-with-airflo
 ![Picture of the ISS](https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2010/02/space_station_over_earth/10293696-3-eng-GB/Space_Station_over_Earth_card_full.jpg)
 """
 
-from airflow.sdk.definitions.asset import Asset
+from airflow import Dataset
 from airflow.decorators import dag, task
 from pendulum import datetime
 import requests
@@ -39,7 +39,7 @@ def example_astronauts():
     # Define tasks
     @task(
         # Define a dataset outlet for the task. This can be used to schedule downstream DAGs when this task has run.
-        outlets=[Asset("current_astronauts")]
+        outlets=[Dataset("current_astronauts")]
     )  # Define that this task updates the `current_astronauts` Dataset
     def get_astronauts(**context) -> list[dict]:
         """
@@ -53,7 +53,7 @@ def example_astronauts():
             r.raise_for_status()
             number_of_people_in_space = r.json()["number"]
             list_of_people_in_space = r.json()["people"]
-        except Exception:
+        except:
             print("API currently not available, using hardcoded data instead.")
             number_of_people_in_space = 12
             list_of_people_in_space = [
