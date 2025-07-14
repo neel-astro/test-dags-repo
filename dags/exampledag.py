@@ -12,7 +12,7 @@ Airflow tasks, and automatically infer dependencies and pass data.
 The second task uses dynamic task mapping to create a copy of the task for
 each Astronaut in the list retrieved from the API. This list will change
 depending on how many Astronauts are in space, and the DAG will adjust
-accordingly each time it runs.
+accordingly each time it runs.1
 
 For more explanation and getting started instructions, see our Write your
 first DAG tutorial: https://www.astronomer.io/docs/learn/get-started-with-airflow
